@@ -1,4 +1,4 @@
-<form action="" #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)"> 
+<!-- <form action="" #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)"> 
   <div class="form-group">
     <label for="email">Mail</label>
     <input type="text" id="email" ngModel name="email" required email class="form-control" #email="ngModel">
@@ -18,4 +18,80 @@
   </div>
   <p *ngIf="!signupForm.valid && signupForm.touched">The form is invalid</p>
   <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+</form> -->
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <form action="" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <div formGroupName="userData">
+          <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" formControlName="username" class="form-control">
+              <span
+               *ngIf="!signUpForm.get('userData.username').valid && signUpForm.get('userData.username').touched" 
+               class="help-block">
+               <span *ngIf="signUpForm.get('userData.username').errors['nameIsForbidden']">This name is invalid </span>
+               <span *ngIf="signUpForm.get('userData.username').errors['required']">This name is invalid </span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" formControlName="email" id="email" class="form-control">
+          
+              <span
+               *ngIf="!signUpForm.get('userData.email').valid && signUpForm.get('userData.email').touched" 
+               class="help-block">Please enter a valid email!
+              </span>
+            </div>
+
+      </div>
+      
+      <div class="radio" *ngFor="let gender of genders">
+        <label>
+          <input type="radio" formControlName="gender" [value]="gender">{{gender}}
+        </label>
+      </div>
+      <span
+         *ngIf="!signUpForm.valid && signUpForm.touched" 
+         class="help-block">Please enter a valid data!
+        </span>
+        <div formArrayName="hobbies">
+            <h4>Your Hobbies</h4>
+            <button class="btn btn-default" type="button" (click)="onAddHobby()">
+              Add Hobby
+            </button>
+            
+            <div class="form-group" *ngFor="let hobby of signUpForm.get('hobbies').controls; let i = index" >
+                <br>
+              <input type="text" class="form-control" [formControlName]="i"> 
+              <br>
+            </div>
+          </div>
+          <br>
+        <button class="btn btn-primary" type="submit">
+            Submit
+        </button>
+    </form>
+    </div>
+  </div>
+</div>
+<!-- <form action="" #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)"> 
+  <div class="form-group">
+    <label for="email">Mail</label>
+    <input type="text" id="email" ngModel name="email" required email class="form-control" #email="ngModel">
+    <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid mail!</span>
+  </div>
+  <div class="form-group">
+    <label for="subscription">Choose a subscription</label>
+    <select name="subscription" [ngModel]="selectSubscription" id="subscription" class="form-control ">
+      <option *ngFor="let sub of subscriptions" [value]="sub">{{sub}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="passsword">Password</label>
+    <input type="password" name="password" id="password" ngModel required class="form-control" #password="ngModel">
+    <span class="help-block" *ngIf="!password.valid && password.touched" >Please enter a password</span>
+  </div>
+  <p *ngIf="!signupForm.valid && signupForm.touched">The form is invalid</p>
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>  -->
